@@ -9,7 +9,8 @@ class Database:
     
     Methods:
         insert_data: inserting the data to the database file
-        read_data_all: read all the data 
+        read_data_all: read all the data
+        show_tables: showing all the tables in the database file
         read_data_one: read specific data
         del_data: delete the data from the database
         search_data: search the data from the database
@@ -69,7 +70,14 @@ class Database:
             self.conn.execute('END TRANSACTION')
         pass
 
-    def read_data_all(self):
+    def read_data_all(self, table, table_join=None, condition=None, name_of_PK=None):
+        """
+        Read all data from a specific table
+
+        """
+        pass
+
+    def show_tables(self):
         pass
 
     def read_data_one(self):
