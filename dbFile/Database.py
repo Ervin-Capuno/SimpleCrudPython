@@ -19,14 +19,18 @@ class Database:
     """
 
 
-    def __init__(self):
+    def __init__(self, db_name='myData.db'):
         """
-        Initialize the database class
-
+        Initialize the Database class
+        
         Args:
-            db_name(str) -> the file name of the database where the data will directly stored
+            db_name(str): name of the database 
+        Example:
+            db = Database() if there is an exist database
+            db = Database('database.db') if there are no existing database
         """
-        self.conn = sqlite3.connect('myData.db')
+
+        self.conn = sqlite3.connect(db_name)
         self.cursor = self.conn.cursor()
 
     def insert_data(self, table, data):
@@ -36,6 +40,9 @@ class Database:
         Args:
             table(str): the name of the table to insert the data
             data(dict): the data that will insert on the table
+
+        Example:
+
         """
 
 
@@ -68,7 +75,7 @@ class Database:
         finally:
             # End the transaction
             self.conn.execute('END TRANSACTION')
-        pass
+        pas
 
     def read_data_all(self, table, table_join=None, condition=None, name_of_PK=None):
         """
