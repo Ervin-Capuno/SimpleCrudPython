@@ -42,12 +42,12 @@ class Database:
             data(dict): the data that will insert on the table
 
         Example:
+            users_table(str) : the table  
+            'name', 'age', 'school'(str): the columsn of the table
 
+            db.insert_data(users_table, { 'name' : 'ervin', 'age': 19, 'school' : 'school Address'})
         """
 
-
-        if not isinstance(table, str):
-            raise ValueError("Table name must be a string.")
         if not isinstance(data, dict):
             raise ValueError("Data must be a dictionary.")
 
@@ -75,11 +75,39 @@ class Database:
         finally:
             # End the transaction
             self.conn.execute('END TRANSACTION')
-        pas
 
     def read_data_all(self, table, table_join=None, condition=None, name_of_PK=None):
         """
         Read all data from a specific table
+
+        if table_join is specified the the condition and the name_of_PK must be specified
+
+        Args:
+            table(str): The name of the table
+            tabe_join(str, optional): The name of the table to perform the joins
+            condition(str, optional): The condition where if it is inner join, left join, and right join
+            name_of_PK(str, optional): The name of the primary key of the the two table
+
+        Returns:
+            list: A list of dictionaries, where each dictionary represents a row from the table.
+                The keys of dictionary are the columns, and the values of dictionary is the data
+
+        Example:
+            Assuming there a table named 'users' with columns of 'name', 'age', and  'school'
+
+            >>>db = Database('myData.db')
+            >>>all_data = db.read_data_all('users')
+            >>>print(all_data)
+            [{'name': 'John', 'age': 30, 'address': 'New York'},
+            {'name': 'John', 'age': 30, 'address': 'New York'},
+            {'name': 'John', 'age': 30, 'address': 'New York'},
+            {'name': 'John', 'age': 30, 'address': 'New York'},
+            other rows
+            ]
+
+            To perform an inner join or any joining condition assuming there
+            is another table named 'orders' and a primary key of userId
+            >>>all_data_with_join = db.read_data_all('persons', 'orders', 'INNER JOIN', 'userId')
 
         """
         pass

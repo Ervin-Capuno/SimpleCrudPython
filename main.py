@@ -2,7 +2,8 @@ from dbFile.Database import Database
 from utils.ErrorClass import ErrorClass
 
 def pick():
-    pass
+    return int(input("What do you want do do: "))
+    
 
 def menu():
     print("""
@@ -12,6 +13,7 @@ def menu():
         3. Delete Data
         4. Search Data
     """)
+
 
 def main():
     while True:
