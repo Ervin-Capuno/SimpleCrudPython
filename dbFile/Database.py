@@ -51,7 +51,7 @@ class Database:
         if not isinstance(data, dict):
             raise ValueError("Data must be a dictionary.")
 
-        placeholders = ', '.join(['?' for _ in data])
+        placeholders = ', '.join(['?' for item in data])
         columns = ', '.join(data.keys())
         values = tuple(data.values())
 
@@ -76,7 +76,8 @@ class Database:
             # End the transaction
             self.conn.execute('END TRANSACTION')
 
-    def read_data_all(self, table, table_join=None, condition=None, name_of_PK=None):
+
+    def read_data_all(self, table, table_join=None, type_of_join=None, name_of_PK=None):
         """
         Read all data from a specific table
 
@@ -85,7 +86,7 @@ class Database:
         Args:
             table(str): The name of the table
             tabe_join(str, optional): The name of the table to perform the joins
-            condition(str, optional): The condition where if it is inner join, left join, and right join
+            type_of_join(str, optional): The condition where if it is inner join, left join, and right join
             name_of_PK(str, optional): The name of the primary key of the the two table
 
         Returns:
@@ -110,7 +111,22 @@ class Database:
             >>>all_data_with_join = db.read_data_all('persons', 'orders', 'INNER JOIN', 'userId')
 
         """
-        pass
+        if table_join and type_of_join and name_of_PK:
+            condition = f"{table}.{name_of_PK} = {table_join}.{name_of_PK}"
+            query = f"SELECT * FROM {table} {type_of_join} {table_join} ON {condition}"
+        else:
+            query = f"SELECT * FROM {table}"
+
+        try:
+            self.cursor.execute(query)
+            columns = [col[0] for col in self.cursor.execute.description]
+            all_data = [dict(zip(columns, row)) for row in self.cursor.fetchall()]
+            return all_data
+
+        except Exception as e:
+            print("An error occured  while reading the data", str(e))
+            return []
+
 
     def show_tables(self):
         pass
