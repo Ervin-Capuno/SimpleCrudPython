@@ -129,9 +129,28 @@ class Database:
 
 
     def show_tables(self):
-        pass
+        """
+        Show all the tables of a database
+
+        Output:
+            string: name of the tables existed in the database
+        """
+        query = "SELECT * FROM sqlite_master WHERE type='table';"
+        self.cursor.execute(query)
+        tables = [table[0] for table in self.cursor.fetchall()]
+
+        print("Tables in the Database")
+
+        for table in tables:
+            print(f"table")
 
     def read_data_one(self):
+        """
+        Read a specific row of data 
+
+        Returns:
+                
+        """
         pass
 
     def del_data(self):
