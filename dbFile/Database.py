@@ -1,4 +1,5 @@
 import sqlite3
+import re
 
 class Database:
     """
@@ -12,6 +13,7 @@ class Database:
         read_data_all: read all the data
         show_tables: showing all the tables in the database file
         read_data_one: read specific data
+        sanitized_input: sanitized the input to prevent sql injection
         del_data: delete the data from the database
         search_data: search the data from the database
         __str__: String representation of the Database object
@@ -144,12 +146,29 @@ class Database:
         for table in tables:
             print(f"table")
 
+
+    def sanitize_input(self, input_str):
+        """
+        Sanitize the input to prevent sql injection.
+
+        Args:
+            input_str(str): The input string to be sanitized.
+
+        Returns: 
+            str: The sanitiezed input string.
+        """
+
+        sanitized_input = re.sub(r"[^a-ZA-Z0-9]", "", input_str)
+        
+
+        return sanitized_input
+
     def read_data_one(self):
         """
         Read a specific row of data 
 
         Returns:
-                
+            
         """
         pass
 
