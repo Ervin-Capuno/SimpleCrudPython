@@ -147,7 +147,9 @@ class Database:
             print(f"table")
 
 
-    def sanitize_input(self, input_str):
+
+    @staticmethod
+    def sanitize_input(input_str):
         """
         Sanitize the input to prevent sql injection.
 
@@ -155,7 +157,7 @@ class Database:
             input_str(str): The input string to be sanitized.
 
         Returns: 
-            str: The sanitiezed input string.
+            str: The sanitized input string.
         """
 
         sanitized_input = re.sub(r"[^a-zA-Z0-9\s]", "", input_str)
