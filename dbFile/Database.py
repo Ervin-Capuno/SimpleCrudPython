@@ -158,9 +158,7 @@ class Database:
             str: The sanitiezed input string.
         """
 
-        sanitized_input = re.sub(r"[^a-ZA-Z0-9]", "", input_str)
-        
-
+        sanitized_input = re.sub(r"[^a-zA-Z0-9\s]", "", input_str)
         return sanitized_input
 
     def read_data_one(self):
