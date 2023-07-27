@@ -13,11 +13,12 @@ class Database:
         read_data_all: read all the data
         show_tables: showing all the tables in the database file
         read_data_one: read specific data
-        sanitized_input: sanitized the input to prevent sql injection
+        sanitized_input(staticmethod): sanitized the input to prevent sql injection
         del_data: delete the data from the database
         search_data: search the data from the database
         __str__: String representation of the Database object
         __repr__: Representation of the Database object
+
     """
 
 
@@ -52,6 +53,9 @@ class Database:
 
         if not isinstance(data, dict):
             raise ValueError("Data must be a dictionary.")
+                
+        table = Database.sanitize_input(table)
+        data = {Database.sanitize_input(key): Database.sanitize_input(key) for key, value in data.items()}
 
         placeholders = ', '.join(['?' for item in data])
         columns = ', '.join(data.keys())
@@ -146,8 +150,6 @@ class Database:
         for table in tables:
             print(f"table")
 
-
-
     @staticmethod
     def sanitize_input(input_str):
         """
@@ -172,10 +174,10 @@ class Database:
         """
         pass
 
-    def del_data(self):
+    def del_data(self, primary_key):
         pass
 
-    def search_data(self):
+    def search_data(self, data, condition):
         pass
 
     def __str__(self):
