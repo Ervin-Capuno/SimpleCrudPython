@@ -44,6 +44,17 @@
 
 
 ## Scope
+* The Database class have a methods of:
+    * insert_data
+    * show_tables
+    * read_specific_data
+    * read_data_all
+    * sanitized_input
+    * del_data
+    * search_dta
+    * __str__
+    * __repr__
 
 
 ## Limitations
+* The Database class don't have a create table method.
