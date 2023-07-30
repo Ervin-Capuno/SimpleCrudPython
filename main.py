@@ -16,10 +16,9 @@ def menu():
 
 
 def main():
-    while True:
-        menu()
-        pass
-
+    name = input("What is your name: ")
+    sanitized_name = Database.sanitize_input(name)
+    print(sanitized_name)
 
 if __name__ == '__main__':
     main()
