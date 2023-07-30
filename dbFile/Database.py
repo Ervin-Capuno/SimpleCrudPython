@@ -165,7 +165,7 @@ class Database:
         sanitized_input = re.sub(r"[^a-zA-Z0-9\s]", "", input_str)
         return sanitized_input
 
-    def read_data_one(self):
+    def read_specific_data(self, table, table_join = None, join_condition = None, condition = None, primary_key =None):
         """
         Read a specific row of data 
 
@@ -177,7 +177,7 @@ class Database:
     def del_data(self, primary_key):
         pass
 
-    def search_data(self, data, condition):
+    def search_data(self, data, condition, table_join = None, join_condition = None, condition, primary_key):
         pass
 
     def __str__(self):
