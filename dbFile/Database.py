@@ -1,5 +1,6 @@
 import sqlite3
 import re
+from tabulate import tabulate
 
 class Database:
     """
@@ -16,6 +17,7 @@ class Database:
         sanitized_input(staticmethod): sanitized the input to prevent sql injection
         del_data: delete the data from the database
         search_data: search the data from the database
+        update_data: update the data from the database
         __str__: String representation of the Database object
         __repr__: Representation of the Database object
 
@@ -165,19 +167,75 @@ class Database:
         sanitized_input = re.sub(r"[^a-zA-Z0-9\s]", "", input_str)
         return sanitized_input
 
-    def read_specific_data(self, table, table_join = None, join_condition = None, condition = None, primary_key =None):
-        """
-        Read a specific row of data 
 
-        Returns:
+    def del_data(self, table, primary_key, data_to_be_deleted):
+        """
+        Delete a row from specific data  based n the primary key.
+
+        Args:
+            table(str): The name of the table from which data will be deleted
+            primary_key(str): The value of the primary key that is uniquely identifiees the row
+            data_to_be_deleted(str) : The data to be deleted
+
+        """
+        table = Database.sanitize_input(table)
+        primary_key = Database.sanitize_input(primary_key)
+
+        query = f"SELECT * FROM {table} WHERE {primary_key} = ?"
+
+        try:
+            self.cursor.execute(query, (data_to_be_deleted,))
+            self.conn.commit()
+
+
+            if self.cursor.rowcount > 0:
+                print("The data is succesfully deleted!")
+    
+        except Exception as e:
+            print("An error occured while deleting the data", str(e))
+
+    def search_data(self, table, table_join = None, join_condition = None, primary_key = None, condition = None, data_to_search=None):
+        """
+        Search data from specific table with optional and custom conditions.
+
+        Args:
+            table(str):
+            table_join(str):
+            joinc_condition(str):
+            primary_key(str):
+            condition(str):
+
+        """
+        table = Database.sanitize_input(table)
+        query = ""
+
+        if condition:
+            condition = Database.sanitize_input(condition)
+            query = f"SELECT * FROM {table} WHERE {condition}"
+        
+        elif table_join and join_condition and primary_key:
+            table_join = Database.sanitize_input(table_join)
+            join_condition = Database.sanitize_input(join_condition)
+            primary_key = Database.sanitize_input(primary_key)
+            query = f"SELECT * FROM {table} {join_condition} {table_join} ON {table}.primary_key = {table_join}.primary_key"
+        
+        else:
+            primary_key = Database.sanitize_input(primary_key)
+            data_to_search = Database.sanitize_input(data_to_search)
+            query = f"SELECT * FROM {table} WHERE {primary_key} = data_to_search"
+
+        try:
+            self.cursor.execute(query)
+            column = [col[0] for col  in self.cursor.description]
+            all_data = [dict(zip(column, row)) for row in self.cursor.fetachall()]
             
-        """
-        pass
+        except Exception as e:
+            print(f"There was an error occured {e}")
 
-    def del_data(self, primary_key):
-        pass
 
-    def search_data(self, data, condition, table_join = None, join_condition = None, condition, primary_key):
+        
+        
+    def update_data(self):
         pass
 
     def __str__(self):
