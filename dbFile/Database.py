@@ -131,6 +131,10 @@ class Database:
             all_data = [dict(zip(columns, row)) for row in self.cursor.fetchall()]
             return all_data
 
+            #header = all_data[0].keys()
+            #table = [list(row.values) for row in all_data]
+            #print(tabulate(table, headers=headers, tablefmt = "grid"))
+
         except Exception as e:
             print("An error occured  while reading the data", str(e))
             return []
@@ -235,8 +239,40 @@ class Database:
 
         
         
-    def update_data(self):
-        pass
+    def update_data(self, table, data, condition = None):
+        """
+        Update data in a specific table with optional custom condition.
+
+        Args:
+            table(str): The name of the table to update.
+            data(dict): A dictionary containing the column-value pairs to be upadated.
+            condition(str, optional): The custom condition for updating in the table.
+        """
+        table = Database.sanitize_input(table)
+        santized_data = {Database.sanitize_input(key): Database.sanitize_input(value) for key, value in data.items()}
+
+        placeholders= ", ".join(f"{key} = ?" for key in sanitized_data)
+        values = tuple(sanitized_data.values())
+
+        query = f"UPDATE {table} SET {placeholders}"
+
+
+        if condition:
+            condition= Database.sanitize_input(condition)
+            query += f"WHERE {condition}"
+
+
+        try:
+            self.conn.execute("BEGIN TRANSACTION")
+            self.cursor.execute(query, values)
+            self.conn.commit()
+
+        exception Exception as e;
+            self.conn.execute("ROLLBACK")
+            print("An Error occurred while updating the data: ", str(e))
+
+        finally:
+            self.conn.execute('END TRANSACTION')
 
     def __str__(self):
         return f"Database({self.db_name})"
