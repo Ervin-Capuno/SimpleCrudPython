@@ -3,3 +3,4 @@ utils/__pycache__
 venv/
 myData.db
 main.py
+db.py
