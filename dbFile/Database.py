@@ -1,6 +1,7 @@
 import sqlite3
 import re
 from tabulate import tabulate
+import os
 
 class Database:
     """
@@ -34,9 +35,58 @@ class Database:
             db = Database() if there is an exist database
             db = Database('database.db') if there are no existing database
         """
+        self.db_name = db_name
 
-        self.conn = sqlite3.connect(db_name)
+        if os.path.exists(self.db_name):
+            self.conn = sqlite3.connect(db_name)
+            self.cursor = self.conn.cursor()
+
+        else:
+            self.create_new_database()
+
+    def create_new_database(self):
+        self.conn = sqlite3.connect(self.db_name)
         self.cursor = self.conn.cursor()
+
+        self.create_tables()
+
+    def create_tables(self):
+        # Create the persons table
+        self.cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS persons(
+                personId INT PRIMARY KEY,
+                password VARCHAR(35),
+                firstName VARCHAR(35),
+                lastName VARCHAR(35),
+                birthDay DATE,
+                age INT,
+                address VARCHAR(35),
+                school VARCHAR(35)
+            )
+            """
+        )
+
+        # Create the vitalSigns table with ON DELETE CASCADE
+        self.cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS vitalSigns(
+                vitalSignID INT PRIMARY KEY,
+                personId INT,
+                weight INT,
+                height INT, 
+                BMI DOUBLE(5,2),
+                FOREIGN KEY(personId) REFERENCES persons(personId) ON DELETE CASCADE
+            )
+            """
+        )
+
+        self.conn.commit()
+
+    def close_connection(self):
+        self.conn.close()
+
+
 
     def insert_data(self, table, data):
         """
