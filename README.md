@@ -57,4 +57,4 @@
 
 
 ## Limitations
-* The Database class don't have a create table method.
+* This Database class is certain only in two tables which vitalSigns table and persons table, if you want to create another database for your program modify the Database class the create tables 
