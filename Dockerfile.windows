@@ -1,0 +1,16 @@
+FROM python:3.11.4-windowsservercore
+
+WORKDIR /app
+
+COPY requirements.txt .
+
+RUN pip install virtualenv
+
+RUN python -m venv venv
+
+RUN venv\Scripts\pip install --no-cache-dir -r requirements.txt
+
+COPY . /app/
+
+CMD ["venv/Scripts/python", "main.py"]
+
