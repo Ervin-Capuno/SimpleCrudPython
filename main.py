@@ -34,15 +34,23 @@ def main():
             db.insert_data("persons", {'password': password, 'firstName' : firstName, 'lastName' : lastName,
                 'age' : age, 'address' : address, 'school' : school})
 
-            cont = input("Do you want to fill up your vital signs: ")
-
-
+            
+            cont = input("Do you want to fill up your vital signs[y/n]: ")
+            
+            if cont == 'y' or cont == 'Y':
+                weight = int(input("What is your weight [kg]: "))
+                height = int(input("What is your height [m]: "))
+                BMI = weight / (height ** 2)
+                personId = ""
+                db.insert("vitalSigns", {'personId' : "" , 'weight' : weight, 'height' : height})
+            else:
+                break
         elif choose == 2:
-
+            pass
         elif choose == 3:
-
+            pass
         elif choose == 4:
-
+            pass
         elif choose == 5:
             run = False
         
