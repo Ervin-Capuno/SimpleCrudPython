@@ -1,12 +1,22 @@
-# SimpleCrudPython
-
+# VitalSignApp
+> A simple Vital sign command line app.
+> A simple CRUD System.
 
 ## Third Party Module
 * sqlite
 * tabulate
 
 ## Installation
+- If Docker installed in a local computer:
+1. open your command prompt/terminal.
+2. type the command below:
+    ```
+        Docker run 
+    ```
+
+- If Docker is not installed in a local computer:
 1. open the command prompt/terminal
+
 2. locate your project directory assuming that the project directory is projectDirectory locate it and type:
     * Windows
         1. Creating a venv file:
