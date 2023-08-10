@@ -43,10 +43,24 @@ def main():
                 BMI = weight / (height ** 2)
                 personId = ""
                 db.insert("vitalSigns", {'personId' : "" , 'weight' : weight, 'height' : height})
+                print("Thank you for the fill-up!")
             else:
                 break
         elif choose == 2:
-            pass
+            table = input("What table do you want to read: ")
+            
+            read = input("What do you want to read [y] for specific or [n] for all of the data")
+            if(read.lower() == 'y'):
+                another_table = input("Do you want to read the another table[y/n]")    
+                if(another_table.lower() == 'y'):
+                    db.search_data()
+                else:
+                    db.search_data()
+            elif(read.lower() == 'n'):
+                db.read_data_all()
+            else:
+                print("Input cannot recognized!")
+                break
         elif choose == 3:
             pass
         elif choose == 4:
