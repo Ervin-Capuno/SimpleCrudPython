@@ -11,7 +11,8 @@ def menu():
         2. Read Data
         3. Delete Data
         4. Search Data
-        5. Exit
+        5. Update Data
+        6. Exit
     """)
 
 
@@ -51,21 +52,26 @@ def main():
             
             read = input("What do you want to read [y] for specific or [n] for all of the data")
             if(read.lower() == 'y'):
-                another_table = input("Do you want to read the another table[y/n]")    
-                if(another_table.lower() == 'y'):
-                    db.search_data()
-                else:
-                    db.search_data()
+                db.read_data_all(table)
             elif(read.lower() == 'n'):
-                db.read_data_all()
+                db.read_data_all(table, 'vitalSigns', 'INNER JOIN', 'personId')
             else:
                 print("Input cannot recognized!")
                 break
         elif choose == 3:
-            pass
+            table = input("What table's data do you want to delete[persons/vitalSigns]")
+            t_id = int(input("What id  do you want to delete"))
+            if(table == 'persons'):
+                del_data(table, t_id, "personId", t_id)
+            elif(table == 'vitalSigns'):
+                del_data(table, "personId", t_id)
+
         elif choose == 4:
             pass
-        elif choose == 5:
+        
+        elif choose = 5:
+            pass
+        elif choose == 6:
             run = False
         
         else:
