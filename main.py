@@ -67,7 +67,14 @@ def main():
                 del_data(table, "personId", t_id)
 
         elif choose == 4:
-            pass
+            inp = input("What do you want to search: ")
+            colum_name = input("What do you want to search example id?")
+            value = input("What value do you want to search")
+            table_join = input("Do you want to see the other data?")
+            if(table_join == 'y' or table_join == 'Y')
+                db.search_data("vitalSigns", )
+            else
+                db.search_data()
         
         elif choose = 5:
             pass
