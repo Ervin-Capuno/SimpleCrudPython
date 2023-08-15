@@ -248,7 +248,7 @@ class Database:
         except Exception as e:
             print("An error occured while deleting the data", str(e))
 
-    def search_data(self, table, table_join = None, join_condition = None, primary_key = None, condition = None, data_to_search=None):
+    def search_data(self, table, table_join = None, join_condition = None, primary_key = None, condition = None):
         """
         Search data from specific table with optional and custom conditions.
 
@@ -256,7 +256,6 @@ class Database:
             table(str):
             table_join(str):
             joinc_condition(str):
-            primary_key(str):
             condition(str):
 
         """
@@ -274,9 +273,7 @@ class Database:
             query = f"SELECT * FROM {table} {join_condition} {table_join} ON {table}.primary_key = {table_join}.primary_key"
         
         else:
-            primary_key = Database.sanitize_input(primary_key)
-            data_to_search = Database.sanitize_input(data_to_search)
-            query = f"SELECT * FROM {table} WHERE {primary_key} = data_to_search"
+            print("Error")
 
         try:
             self.cursor.execute(query)
