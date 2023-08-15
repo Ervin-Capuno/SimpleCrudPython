@@ -72,9 +72,9 @@ def main():
             value = input("What value do you want to search")
             table_join = input("Do you want to see the other data?")
             if(table_join == 'y' or table_join == 'Y')
-                db.search_data("vitalSigns", )
+                db.search_data("persons", f"column_name = value")
             else
-                db.search_data()
+                db.search_data('persons', 'vitalSigns', 'INNER JOIN', 'personId', f"column_name = value")
         
         elif choose = 5:
             pass
