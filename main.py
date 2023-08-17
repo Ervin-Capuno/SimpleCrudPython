@@ -77,7 +77,25 @@ def main():
                 db.search_data('persons', 'vitalSigns', 'INNER JOIN', 'personId', f"column_name = value")
         
         elif choose = 5:
-            pass
+            person_id = input("What is the persons Id")
+            firstName = input("What is your first name: ")                                                                                                         
+            lastName = input("What is your last name: ")                                                                                                           
+            password = input("What is your password")                                                                                                              
+            age = int(input("What is your age: "))                                                                                                                 
+            address = input("What is your age: ")                                                                                                                  
+            school = input("What school do you study: ")                                                                                                           
+            
+            db.update_data('persons',{'password': password, 'firstName' : firstName, 'lastName' : lastName, 'age' : age, 'address' : address, 'school' : school})
+
+            cont = input("Do you want to fill up your vital signs[y/n]: ")                                                                                         
+                                                                                                                                                                    
+            if cont == 'y' or cont == 'Y':                                                                                                                         
+	            weight = int(input("What is your weight [kg]: "))                                                                                                  
+	            height = int(input("What is your height [m]: "))                                                                                                   
+	            BMI = weight / (height ** 2)                                                                                                                       
+	            personId = ""                                                                                                                                      
+	            db.update_data("vitalSigns", {'personId' : "" , 'weight' : weight, 'height' : height})                                                                  
+	print("Thank you for the updating!")    
         elif choose == 6:
             run = False
         
